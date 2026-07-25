@@ -316,8 +316,8 @@ function viewJD(rid){ let c,r; for(const cc of DB.countries){ const rr=cc.roles.
   const li=arr=>'<ul>'+arr.map(i=>`<li>${esc(i)}</li>`).join('')+'</ul>';
   showModal(`<div class="mh"><h3>${esc(r.title)} — ${c.flag} ${c.name}</h3><span class="x" onclick="closeModal()">×</span></div>
     <div class="jdbody"><p>${esc(jd.summary)}</p>
-      <h4>Key responsibilities</h4>${li(jd.resp)}
-      <h4>Requirements</h4>${li(jd.req)}
+      <h4>Key responsibilities</h4>${li(jd.resp.concat(['Use modern AI tools (Claude, ChatGPT, etc.) to work faster and build simple automations.']))}
+      <h4>Requirements</h4>${li(jd.req.concat(['AI-first mindset — comfortable using Claude / ChatGPT day-to-day to speed up work and automate tasks.']))}
       <p style="margin-top:16px;font-size:12px">Full job description in the repo: <b>/roles/</b></p></div>
     <div class="mf"><span></span><button class="btn primary" onclick="closeModal()">Close</button></div>`,true);
 }
