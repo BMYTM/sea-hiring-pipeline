@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HONO · SEA Hiring Pipeline Portal</title>
+<style>
+  :root{
+    --bg:#0f1729; --panel:#161f36; --panel2:#1d2842; --line:#293556;
+    --ink:#eef2fb; --muted:#94a3c4; --faint:#5f6d92;
+    --brand:#ff6a3d; --brand2:#ffb347; --accent:#4f8cff; --accent2:#22d3a6;
+    --sourced:#7c8db5; --screening:#4f8cff; --interview:#a78bfa; --offer:#ffb347; --hired:#22d3a6;
+    --danger:#f0506e;
+    --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:radial-gradient(1200px 600px at 80% -10%,#1a2544 0%,var(--bg) 55%);
+    color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:1280px;margin:0 auto;padding:22px 26px 80px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:20px;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));color:#26160c;box-shadow:0 6px 18px rgba(255,106,61,.35)}
+  .brand h1{font-size:19px;margin:0;letter-spacing:.2px}
+  .brand p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+  .top-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 14px;border-radius:10px;
+    font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+  .btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent;color:#26160c}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:6px 10px;font-size:12px}
+  .kpis{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:22px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;position:relative;overflow:hidden}
+  .kpi .v{font-size:26px;font-weight:800;line-height:1}
+  .kpi .l{font-size:11.5px;color:var(--muted);margin-top:7px;text-transform:uppercase;letter-spacing:.6px}
+  .kpi .bar{position:absolute;left:0;top:0;bottom:0;width:4px}
+  @media(max-width:960px){.kpis{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .tab{padding:9px 15px;border-radius:10px;background:var(--panel);border:1px solid var(--line);cursor:pointer;
+    font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;transition:.15s;color:var(--muted)}
+  .tab .flag{font-size:16px}
+  .tab .cnt{background:var(--panel2);color:var(--muted);border-radius:20px;padding:1px 8px;font-size:11px;font-weight:700}
+  .tab:hover{color:var(--ink);border-color:var(--accent)}
+  .tab.active{background:linear-gradient(135deg,rgba(255,106,61,.18),rgba(79,140,255,.14));border-color:var(--brand);color:var(--ink)}
+  .tab.active .cnt{background:var(--brand);color:#26160c}
+  .tab .badge{font-size:9.5px;padding:1px 6px;border-radius:6px;background:rgba(79,140,255,.2);color:#a9c6ff;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .country-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+  .ch-left{display:flex;align-items:center;gap:14px}
+  .ch-flag{font-size:34px}
+  .ch-left h2{margin:0;font-size:21px}
+  .ch-left .lead{font-size:13px;color:var(--muted);margin-top:3px}
+  .lead b{color:var(--ink)}
+  .pill{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-weight:600}
+  .roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+  .role{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;cursor:pointer;transition:.15s;position:relative}
+  .role:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .role .rtitle{font-size:15.5px;font-weight:700;margin:0 0 3px}
+  .role .rfunc{font-size:12px;color:var(--muted)}
+  .role .rmeta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 12px}
+  .chip{font-size:11px;padding:3px 9px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-weight:600}
+  .chip.open{color:#a9f0d1;border-color:rgba(34,211,166,.35);background:rgba(34,211,166,.1)}
+  .chip.urgent{color:#ffc7b3;border-color:rgba(255,106,61,.4);background:rgba(255,106,61,.12)}
+  .chip.hold{color:#ffe0a3;border-color:rgba(255,179,71,.35);background:rgba(255,179,71,.1)}
+  .chip.jd{color:#a9c6ff;border-color:rgba(79,140,255,.35);background:rgba(79,140,255,.1)}
+  .rstats{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:11px}
+  .rstats .cands{font-size:12px;color:var(--muted)}
+  .rstats .cands b{color:var(--ink);font-size:14px}
+  .funnel{display:flex;gap:3px;height:7px;border-radius:6px;overflow:hidden;width:120px;background:var(--panel2)}
+  .funnel span{display:block}
+  .board-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .back{cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .back:hover{color:var(--ink)}
+  .board{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:start}
+  @media(max-width:1000px){.board{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.board{grid-template-columns:1fr}}
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:10px;min-height:120px}
+  .col.drag-over{border-color:var(--accent);background:var(--panel2)}
+  .col h3{font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin:2px 4px 10px;display:flex;align-items:center;justify-content:space-between}
+  .col h3 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px}
+  .col h3 .cc{background:var(--panel2);border-radius:20px;padding:1px 7px;font-size:11px;color:var(--muted)}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:9px;cursor:grab;transition:.12s}
+  .card:hover{border-color:var(--accent)}
+  .card.dragging{opacity:.45}
+  .card .cn{font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+  .card .cr{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .card .edit{opacity:0;font-size:11px;color:var(--faint);cursor:pointer}
+  .card:hover .edit{opacity:1}
+  .card .edit:hover{color:var(--accent)}
+  .card a.li{color:#7fb0ff;font-size:11px;text-decoration:none}
+  .card a.li:hover{text-decoration:underline}
+  .ibadge{display:inline-block;margin-top:7px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:rgba(255,179,71,.14);color:#ffd08a;border:1px solid rgba(255,179,71,.35)}
+  .chip.inv{color:#ffd08a;border-color:rgba(255,179,71,.35);background:rgba(255,179,71,.12)}
+  .addc{width:100%;border:1px dashed var(--line);background:transparent;color:var(--muted);border-radius:10px;padding:8px;font-size:12px;cursor:pointer;font-weight:600}
+  .addc:hover{border-color:var(--accent);color:var(--ink)}
+  .empty{text-align:center;color:var(--faint);padding:50px 20px;font-size:14px}
+  .overlay{position:fixed;inset:0;background:rgba(6,10,20,.7);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .overlay.show{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;width:100%;max-width:460px;box-shadow:var(--shadow);max-height:90vh;overflow:auto}
+  .modal.wide{max-width:640px}
+  .modal .mh{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+  .modal .mh h3{margin:0;font-size:16px}
+  .modal .mb{padding:18px 20px;display:grid;gap:13px}
+  .modal .mf{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+  label.fl{font-size:12px;color:var(--muted);font-weight:600;display:block;margin-bottom:5px}
+  input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:9px 11px;font-size:13px;font-family:var(--font)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  textarea{resize:vertical;min-height:60px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .x{cursor:pointer;color:var(--muted);font-size:20px;line-height:1}
+  .x:hover{color:var(--ink)}
+  .del{color:var(--danger);background:transparent;border:1px solid rgba(240,80,110,.4)}
+  .del:hover{background:rgba(240,80,110,.12);border-color:var(--danger)}
+  .jdbody{padding:6px 22px 20px;line-height:1.6;font-size:13.5px;color:var(--ink)}
+  .jdbody h4{color:var(--brand2);font-size:13px;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 6px}
+  .jdbody ul{margin:6px 0;padding-left:20px;color:var(--muted)}
+  .jdbody li{margin:4px 0}
+  .jdbody p{color:var(--muted);margin:6px 0}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel2);border:1px solid var(--accent);
+    color:var(--ink);padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.25s;z-index:60;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot{margin-top:30px;text-align:center;color:var(--faint);font-size:11.5px}
+  input[type=file]{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">H</div>
+      <div>
+        <h1>SEA Hiring Pipeline Portal</h1>
+        <p>HONO.ai · GTM &amp; Delivery recruiting across Southeast Asia</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost sm" onclick="resetSeed()">↺ Reset sample</button>
+      <button class="btn ghost sm" onclick="importFile()">↥ Import</button>
+      <button class="btn ghost sm" onclick="exportData()">↧ Export</button>
+      <button class="btn primary" onclick="openRole()">＋ Add Role</button>
+    </div>
+  </header>
+  <div class="kpis" id="kpis"></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="view"></div>
+  <div class="foot" id="foot"></div>
+</div>
+<div class="overlay" id="overlay"></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileInput" accept="application/json" onchange="handleFile(event)">
+
+<script>
+/* ================= Config ================= */
+const STAGES=[{key:'Sourced',color:'var(--sourced)'},{key:'Screening',color:'var(--screening)'},
+  {key:'Interview',color:'var(--interview)'},{key:'Offer',color:'var(--offer)'},{key:'Hired',color:'var(--hired)'}];
+const FUNCTIONS=['Sales','Presales','Implementation','Customer Success','Support','Operations','People / TA','Leadership','Marketing'];
+const STATUSES=['Open','Urgent','On-hold'];
+const LS_KEY='hono_sea_pipeline_v2';
+let uid=1000; const nid=()=>'x'+(++uid);
+
+/* ================= Seed data ================= */
+function seed(){ uid=1000; return { version:2, countries:[
+  { id:'ph', name:'Philippines', flag:'🇵🇭', head:'Maria Santos', ledBy:'head', roles:[
+    { id:nid(), title:'Senior Account Executive', func:'Sales', level:'Senior', count:2, status:'Urgent', hm:'Maria Santos', target:'2026-08-30', candidates:[
+      {id:nid(),name:'Andrea Reyes',role:'AE',stage:'Interview',source:'LinkedIn',notes:'Strong SaaS closer, ex-Sprout.'},
+      {id:nid(),name:'Marco dela Cruz',role:'AE',stage:'Offer',source:'Referral',notes:'Verbal yes, finalizing comp.'},
+      {id:nid(),name:'Jenn Ocampo',role:'AE',stage:'Screening',source:'Agency',notes:'HRtech background.'},
+      {id:nid(),name:'Paolo Villanueva',role:'AE',stage:'Sourced',source:'LinkedIn',notes:''}]},
+    { id:nid(), title:'Implementation Consultant', func:'Implementation', level:'Mid', count:1, status:'Open', hm:'Maria Santos', target:'2026-09-15', candidates:[
+      {id:nid(),name:'Grace Lim',role:'Impl.',stage:'Screening',source:'Job board',notes:'Payroll domain expertise.'},
+      {id:nid(),name:'Rafael Tan',role:'Impl.',stage:'Interview',source:'Referral',notes:'2nd round with delivery lead.'}]},
+    { id:nid(), title:'SDR (Outbound)', func:'Sales', level:'Junior', count:2, status:'Open', hm:'Maria Santos', target:'2026-09-30', candidates:[
+      {id:nid(),name:'Kim Bautista',role:'SDR',stage:'Sourced',source:'LinkedIn',notes:''},
+      {id:nid(),name:'Diego Ramos',role:'SDR',stage:'Screening',source:'Inbound',notes:''}]}]},
+  { id:'id', name:'Indonesia', flag:'🇮🇩', head:'Budi Santoso', ledBy:'head', roles:[
+    { id:nid(), title:'Country Sales Lead — Enterprise', func:'Sales', level:'Senior', count:1, status:'Urgent', hm:'Budi Santoso', target:'2026-08-20', candidates:[
+      {id:nid(),name:'Rina Wijaya',role:'Ent AE',stage:'Offer',source:'Executive search',notes:'Ex-Mekari, great logos.'},
+      {id:nid(),name:'Agus Pratama',role:'Ent AE',stage:'Interview',source:'LinkedIn',notes:''}]},
+    { id:nid(), title:'Solution / Presales Consultant', func:'Presales', level:'Mid', count:1, status:'Open', hm:'Budi Santoso', target:'2026-09-10', candidates:[
+      {id:nid(),name:'Dewi Anggraini',role:'Presales',stage:'Interview',source:'Referral',notes:'Strong demo skills.'},
+      {id:nid(),name:'Hendra Kusuma',role:'Presales',stage:'Sourced',source:'LinkedIn',notes:''}]},
+    { id:nid(), title:'Customer Success Manager', func:'Customer Success', level:'Mid', count:1, status:'On-hold', hm:'Budi Santoso', target:'2026-10-01', candidates:[
+      {id:nid(),name:'Sari Melati',role:'CSM',stage:'Screening',source:'Job board',notes:'Paused pending Q4 budget.'}]}]},
+  { id:'my', name:'Malaysia', flag:'🇲🇾', head:'Nurul Aziz', ledBy:'head', roles:[
+    { id:nid(), title:'Account Executive — Mid-Market', func:'Sales', level:'Mid', count:2, status:'Open', hm:'Nurul Aziz', target:'2026-09-05', candidates:[
+      {id:nid(),name:'Wei Ling Chong',role:'AE',stage:'Interview',source:'LinkedIn',notes:'Bilingual EN/BM/Mandarin.'},
+      {id:nid(),name:'Arif Hakim',role:'AE',stage:'Screening',source:'Referral',notes:''},
+      {id:nid(),name:'Priya Nair',role:'AE',stage:'Sourced',source:'Agency',notes:''}]},
+    { id:nid(), title:'Implementation Consultant', func:'Implementation', level:'Mid', count:1, status:'Open', hm:'Nurul Aziz', target:'2026-09-20', candidates:[
+      {id:nid(),name:'Tan Mei Yee',role:'Impl.',stage:'Hired',source:'Referral',notes:'Starts Aug 4.'},
+      {id:nid(),name:'Suresh Kumar',role:'Impl.',stage:'Sourced',source:'Job board',notes:'Backfill pipeline.'}]}]},
+  { id:'sg', name:'Singapore', flag:'🇸🇬', head:'Boonchoo Malhotra', ledBy:'direct', roles:[
+    { id:nid(), title:'Regional Enterprise AE', func:'Sales', level:'Senior', count:1, status:'Urgent', hm:'Boonchoo Malhotra', target:'2026-08-25', candidates:[
+      {id:nid(),name:'Cheryl Ong',role:'Ent AE',stage:'Interview',source:'Executive search',notes:'Final panel next week.'},
+      {id:nid(),name:'Daniel Foo',role:'Ent AE',stage:'Screening',source:'LinkedIn',notes:''}]},
+    { id:nid(), title:'Partnerships Manager (SEA)', func:'Marketing', level:'Senior', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-10-10', candidates:[
+      {id:nid(),name:'Nadia Rahman',role:'Partnerships',stage:'Sourced',source:'LinkedIn',notes:''}]}]},
+  { id:'th', name:'Thailand', flag:'🇹🇭', head:'Boonchoo Malhotra', ledBy:'direct', roles:[
+    { id:nid(), title:'Payroll Functional Consultant', func:'Implementation', level:'Mid-Senior', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-15', jd:JD.payroll, candidates:[
+      {id:nid(),name:'Jessada Saeng-amorn',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/jessada-saeng-amorn/',notes:'HRIS & Payroll Consultant @ Humanica. Invite sent 25 Jul — awaiting reply. Top fit.'},
+      {id:nid(),name:'Kittiyote Saisakol',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/kittiyote-saisakol-b69b7a2b0/',notes:'HR Payroll & Consultant.'},
+      {id:nid(),name:'Wannasikarn Puengnam',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/wannasikarn/',notes:'Payroll Consultant.'},
+      {id:nid(),name:'Chayanis Inruedee',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Senior Payroll Consultant. Find via payroll search.'},
+      {id:nid(),name:'Lapat Prasrihaklang',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Senior Payroll Consultant.'},
+      {id:nid(),name:'Marisa Boonjan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Payroll Consultant.'}]},
+    { id:nid(), title:'L1 Support Specialist', func:'Support', level:'Junior-Mid', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-20', jd:JD.l1, candidates:[
+      {id:nid(),name:'Natee Thungpipat',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/natee-thungpipat/',notes:'App Support Engineer | SQL | Linux | API. Top fit.'},
+      {id:nid(),name:'Rittidej Sriadulpan',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/rittidej-sriadulpan-864473202/',notes:'Application Support Engineer.'},
+      {id:nid(),name:'Nathachok Namwong',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/nathachok-namwong-4b9285233/',notes:'Application Support Engineer @ Honeywell.'},
+      {id:nid(),name:'Nam Lada',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Senior Application Support Engineer.'},
+      {id:nid(),name:'Prapath Suayroop',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Software Support Engineer, MSc.'}]},
+    { id:nid(), title:'Operations Lead', func:'Operations', level:'Senior', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-30', jd:JD.ops, candidates:[
+      {id:nid(),name:'Thanasin Pungvora-asn',role:'Ops Lead',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/thanasin-pungvora-asn-5877a024/',notes:'Technology Delivery Lead @ Accenture. Top fit.'},
+      {id:nid(),name:'Thana Witchawut',role:'Ops Lead',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/thana-witchawut-110042180/',notes:'Practice Lead, APAC — CRM & workflow systems.'},
+      {id:nid(),name:'Kanawut C.',role:'Ops Lead',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/kanawutc/',notes:'Service Delivery Manager @ Comarch.'},
+      {id:nid(),name:'Kanitta Hutamekalin',role:'Ops Lead',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/kanitta-hutamekalin-97bb6b25/',notes:'Complex-project / on-time delivery specialist.'},
+      {id:nid(),name:'Gardpol Nimitchai',role:'Ops Lead',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Program Delivery Manager, True Digital (ex-PwC).'}]},
+    { id:nid(), title:'Talent Acquisition Specialist', func:'People / TA', level:'Mid', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-10', jd:JD.ta, candidates:[]}]},
+  { id:'vn', name:'Vietnam', flag:'🇻🇳', head:'Boonchoo Malhotra', ledBy:'direct', roles:[
+    { id:nid(), title:'SDR / Market Development', func:'Sales', level:'Junior', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-10-05', candidates:[
+      {id:nid(),name:'Linh Nguyen',role:'SDR',stage:'Sourced',source:'LinkedIn',notes:'New market entry.'}]}]}
+]};}
+
+/* Condensed JDs (full versions live in /roles/*.md) */
+const JD={
+  payroll:{summary:'Owns the payroll workstream in client implementations — configures HONO payroll to Thai statutory rules, runs parallel runs to zero variance, and takes clients live.',
+    resp:['Gather payroll requirements: pay elements, allowances, deductions, OT, approvals','Configure HONO payroll + Thai statutory: SSO, PND1, Provident Fund, year-end (PND91 / 50 Tawi)','Run parallel payroll and drive variances to the baht to zero','Lead payroll UAT and prepare module-wise sign-off','Support first live runs (hypercare) and hand over to support'],
+    req:['3+ yrs running/implementing payroll in Thailand','Current Thai statutory knowledge (SSO, PIT withholding, Provident Fund)','Hands-on payroll system configuration','Thai + English professional proficiency']},
+  l1:{summary:'First point of contact for HONO users in Thailand — triages and resolves tickets within SLA, escalates the rest with clean context.',
+    resp:['Log, triage and prioritise tickets against SLA','Resolve L1 issues: access, self-service, leave/attendance, reports','Reproduce and escalate L2/L3 with full steps','Maintain knowledge base and client FAQs','Protect SLA and CSAT targets'],
+    req:['1–3 yrs support / service desk / HR ops, ideally SaaS or HRMS','Structured troubleshooting and clear communication','Comfort working to SLAs','Thai + English professional proficiency']},
+  ops:{summary:'Owns HONO delivery and support in Thailand — runs implementations to on-time go-lives, leads the local team, and is accountable for client success. Reports to SEA Business Head.',
+    resp:['Own the Thailand delivery portfolio kickoff → go-live → hypercare','Build and lead consultants + L1 support (hire, coach, manage)','Senior escalation point; safeguard CSAT, SLA, reference-ability','Partner with Sales on scoping and handover','Stand up and improve local delivery/support processes'],
+    req:['6+ yrs services delivery / implementation / HR ops, 2+ yrs leading a team','Track record of on-time enterprise / HRMS go-lives','Strong client management and operational rigour','Thai + English fluency']},
+  ta:{summary:'Owns full-cycle recruiting for HONO Thailand growth — sources proactively, runs a tight candidate-friendly process, closes offers, and builds employer brand.',
+    resp:['Partner with hiring managers to define roles and sourcing plans','Proactively source via LinkedIn, referrals, job boards, network','Run full cycle: screen, coordinate, feedback, keep candidates warm','Manage offers: Thai-market benchmarking, negotiation, close','Keep pipeline data clean and report against targets'],
+    req:['3+ yrs recruiting / TA hiring in Thailand','Proven proactive sourcing (LinkedIn outreach, networks)','Strong stakeholder management','Thai + English fluency']}
+};
+
+/* ================= State ================= */
+let DB=null, activeCountry, openRoleId=null, dragCand=null;
+
+/* ================= Persistence ================= */
+function save(){ try{ localStorage.setItem(LS_KEY,JSON.stringify(DB)); }catch(e){} }
+function loadSaved(){ try{ const s=localStorage.getItem(LS_KEY); if(s){ const d=JSON.parse(s); if(d&&Array.isArray(d.countries)) return d; } }catch(e){} return null; }
+function bumpUid(){ let mx=1000; (DB.countries||[]).forEach(c=>{ (c.roles||[]).forEach(r=>{ const m=(''+r.id).match(/\d+/); if(m) mx=Math.max(mx,+m[0]); (r.candidates||[]).forEach(x=>{ const mm=(''+x.id).match(/\d+/); if(mm) mx=Math.max(mx,+mm[0]); }); }); }); uid=mx; }
+function resetSeed(){ if(confirm('Reset to the built-in sample data? This clears your saved changes in this browser.')){ DB=seed(); activeCountry=DB.countries[0].id; openRoleId=null; save(); render(); toast('Reset to sample data'); } }
+
+/* ================= Helpers ================= */
+const $=s=>document.querySelector(s);
+const countryById=id=>DB.countries.find(c=>c.id===id);
+const roleById=(c,id)=>c.roles.find(r=>r.id===id);
+function allRoles(){ return DB.countries.flatMap(c=>c.roles.map(r=>({c,r}))); }
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1900); }
+function statusClass(s){ return s==='Urgent'?'urgent':s==='On-hold'?'hold':'open'; }
+function fmtDate(d){ if(!d) return '—'; const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}); }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ================= KPIs ================= */
+function renderKPIs(){
+  const roles=allRoles().map(x=>x.r); let seats=0,cands=0,invited=0,inInt=0,offers=0,hired=0;
+  roles.forEach(r=>{ seats+=(r.status==='On-hold'?0:r.count); (r.candidates||[]).forEach(c=>{ cands++;
+    if(c.invited)invited++; if(c.stage==='Interview')inInt++; if(c.stage==='Offer')offers++; if(c.stage==='Hired')hired++; }); });
+  const data=[{v:roles.length,l:'Open Roles',c:'var(--accent)'},{v:seats,l:'Seats to Fill',c:'var(--brand)'},
+    {v:cands,l:'Candidates',c:'var(--sourced)'},{v:invited,l:'Invited',c:'var(--brand2)'},{v:inInt,l:'In Interview',c:'var(--interview)'},
+    {v:offers,l:'Offers Out',c:'var(--offer)'},{v:hired,l:'Hired',c:'var(--hired)'}];
+  $('#kpis').innerHTML=data.map(k=>`<div class="kpi"><div class="bar" style="background:${k.c}"></div><div class="v">${k.v}</div><div class="l">${k.l}</div></div>`).join('');
+}
+/* ================= Tabs ================= */
+function renderTabs(){ $('#tabs').innerHTML=DB.countries.map(c=>`<div class="tab ${c.id===activeCountry?'active':''}" onclick="selectCountry('${c.id}')">
+  <span class="flag">${c.flag}</span>${c.name}<span class="cnt">${c.roles.length}</span>${c.ledBy==='direct'?'<span class="badge">direct</span>':''}</div>`).join(''); }
+function selectCountry(id){ activeCountry=id; openRoleId=null; render(); }
+
+/* ================= Country view ================= */
+function renderCountry(){
+  const c=countryById(activeCountry);
+  const seats=c.roles.reduce((a,r)=>a+(r.status==='On-hold'?0:r.count),0);
+  const cands=c.roles.reduce((a,r)=>a+r.candidates.length,0);
+  const rolesHTML=c.roles.length?c.roles.map(r=>roleCard(c,r)).join(''):`<div class="empty">No open roles for ${c.name} yet. Click "Add Role" to create one.</div>`;
+  $('#view').innerHTML=`<div class="country-head"><div class="ch-left"><div class="ch-flag">${c.flag}</div><div>
+      <h2>${c.name}</h2><div class="lead">${c.ledBy==='direct'?'Led directly by <b>Boonchoo Malhotra</b>':'Country Head: <b>'+c.head+'</b>'}</div></div></div>
+    <div style="display:flex;gap:8px;align-items:center"><span class="pill">${c.roles.length} roles</span><span class="pill">${seats} seats</span>
+      <span class="pill">${cands} candidates</span><button class="btn primary sm" onclick="openRole(null,'${c.id}')">＋ Role</button></div></div>
+    <div class="roles">${rolesHTML}</div>`;
+}
+function roleCard(c,r){
+  const byStage=STAGES.map(s=>r.candidates.filter(x=>x.stage===s.key).length);
+  const funnel=STAGES.map((s,i)=>byStage[i]?`<span style="flex:${byStage[i]};background:${s.color}"></span>`:'').join('');
+  const invN=r.candidates.filter(x=>x.invited).length;
+  return `<div class="role" onclick="openBoard('${c.id}','${r.id}')">
+    <div class="rtitle">${r.title}</div><div class="rfunc">${r.func} · ${r.level} · ${r.count} seat${r.count>1?'s':''}</div>
+    <div class="rmeta"><span class="chip ${statusClass(r.status)}">${r.status}</span><span class="chip">HM: ${r.hm.split(' ')[0]}</span>
+      <span class="chip">Target: ${fmtDate(r.target)}</span>${r.jd?'<span class="chip jd">JD</span>':''}${invN?`<span class="chip inv">✉ ${invN} invited</span>`:''}</div>
+    <div class="rstats"><div class="cands"><b>${r.candidates.length}</b> candidate${r.candidates.length!==1?'s':''}${invN?` · ${invN} invited`:''}</div>
+      <div class="funnel" title="Pipeline by stage">${funnel||'<span style="flex:1;background:var(--panel2)"></span>'}</div></div></div>`;
+}
+/* ================= Board ================= */
+function openBoard(cid,rid){ activeCountry=cid; openRoleId=rid; render(); }
+function closeBoard(){ openRoleId=null; render(); }
+function renderBoard(){
+  const c=countryById(activeCountry), r=roleById(c,openRoleId);
+  if(!r){ openRoleId=null; return render(); }
+  const cols=STAGES.map(s=>{ const cards=r.candidates.filter(x=>x.stage===s.key);
+    return `<div class="col" data-stage="${s.key}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event,'${s.key}')">
+      <h3><span><span class="dot" style="background:${s.color}"></span>${s.key}</span><span class="cc">${cards.length}</span></h3>
+      ${cards.map(x=>candCard(x)).join('')}<button class="addc" onclick="openCand('${r.id}',null,'${s.key}')">＋ candidate</button></div>`; }).join('');
+  $('#view').innerHTML=`<div class="board-head"><div class="back" onclick="closeBoard()">← ${c.flag} ${c.name}</div></div>
+    <div class="country-head" style="margin-bottom:16px"><div class="ch-left"><div>
+      <h2 style="font-size:19px">${r.title}</h2>
+      <div class="lead">${r.func} · ${r.level} · ${r.count} seat${r.count>1?'s':''} · HM <b>${r.hm}</b> · target <b>${fmtDate(r.target)}</b></div></div></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="chip ${statusClass(r.status)}">${r.status}</span>
+        ${r.jd?`<button class="btn ghost sm" onclick="viewJD('${r.id}')">📄 View JD</button>`:''}
+        <button class="btn ghost sm" onclick="openRole('${r.id}')">✎ Edit role</button>
+        <button class="btn primary sm" onclick="openCand('${r.id}',null,'Sourced')">＋ Candidate</button></div></div>
+    <div class="board">${cols}</div>`;
+}
+function candCard(x){
+  const li=x.linkedin?`<a class="li" href="${esc(x.linkedin)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">in ↗</a>`:'';
+  const inv=x.invited?`<span class="ibadge" title="Invitation sent">✉ Invited ${fmtDate(x.invited)}</span>`:'';
+  return `<div class="card" draggable="true" data-id="${x.id}" ondragstart="dragStart(event,'${x.id}')" ondragend="dragEnd(event)">
+    <div class="cn">${esc(x.name)}<span class="edit" onclick="event.stopPropagation();editCandFind('${x.id}')">edit</span></div>
+    <div class="cr">${esc(x.role||'')}${x.source?' · '+esc(x.source):''} ${li}</div>
+    ${inv}
+    ${x.notes?`<div class="cr" style="margin-top:6px;color:var(--faint)">"${esc(x.notes)}"</div>`:''}</div>`;
+}
+/* ================= JD viewer ================= */
+function viewJD(rid){ let c,r; for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){c=cc;r=rr;break;} }
+  if(!r||!r.jd) return; const jd=r.jd;
+  const li=arr=>'<ul>'+arr.map(i=>`<li>${esc(i)}</li>`).join('')+'</ul>';
+  showModal(`<div class="mh"><h3>${esc(r.title)} — ${c.flag} ${c.name}</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="jdbody"><p>${esc(jd.summary)}</p>
+      <h4>Key responsibilities</h4>${li(jd.resp)}
+      <h4>Requirements</h4>${li(jd.req)}
+      <p style="margin-top:16px;font-size:12px">Full job description in the repo: <b>/roles/</b></p></div>
+    <div class="mf"><span></span><button class="btn primary" onclick="closeModal()">Close</button></div>`,true);
+}
+/* ================= Drag & drop ================= */
+function dragStart(e,id){ dragCand=id; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
+function dragEnd(e){ e.currentTarget.classList.remove('dragging'); }
+function dragOver(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function dragLeave(e){ e.currentTarget.classList.remove('drag-over'); }
+function drop(e,stage){ e.preventDefault(); e.currentTarget.classList.remove('drag-over'); if(!dragCand) return;
+  const c=countryById(activeCountry), r=roleById(c,openRoleId), cand=r.candidates.find(x=>x.id===dragCand);
+  if(cand&&cand.stage!==stage){ cand.stage=stage; toast(`${cand.name} → ${stage}`); } dragCand=null; render(); }
+/* ================= Role modal ================= */
+function openRole(rid,forceCountry){
+  const editing=!!rid; let c,r;
+  if(editing){ for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){c=cc;r=rr;break;} } }
+  else { c=countryById(forceCountry||activeCountry); r={title:'',func:'Sales',level:'Mid',count:1,status:'Open',hm:c.head,target:''}; }
+  const opts=(arr,val)=>arr.map(o=>`<option ${o===val?'selected':''}>${o}</option>`).join('');
+  const cOpts=DB.countries.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${x.flag} ${x.name}</option>`).join('');
+  showModal(`<div class="mh"><h3>${editing?'Edit Role':'Add Role'}</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="mb"><div><label class="fl">Role title</label><input id="f_title" value="${esc(r.title)}" placeholder="e.g. Payroll Functional Consultant"></div>
+      <div><label class="fl">Country</label><select id="f_country">${cOpts}</select></div>
+      <div class="grid2"><div><label class="fl">Function</label><select id="f_func">${opts(FUNCTIONS,r.func)}</select></div>
+        <div><label class="fl">Level</label><input id="f_level" value="${esc(r.level)}" placeholder="e.g. Mid, Senior"></div></div>
+      <div class="grid2"><div><label class="fl">Seats</label><input id="f_count" type="number" min="1" value="${r.count}"></div>
+        <div><label class="fl">Status</label><select id="f_status">${opts(STATUSES,r.status)}</select></div></div>
+      <div class="grid2"><div><label class="fl">Hiring manager</label><input id="f_hm" value="${esc(r.hm)}"></div>
+        <div><label class="fl">Target close</label><input id="f_target" type="date" value="${r.target||''}"></div></div></div>
+    <div class="mf">${editing?`<button class="btn del" onclick="deleteRole('${rid}')">Delete</button>`:'<span></span>'}
+      <div style="display:flex;gap:8px"><button class="btn ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn primary" onclick="saveRole(${editing?`'${rid}'`:'null'})">Save</button></div></div>`);
+}
+function saveRole(rid){
+  const data={title:$('#f_title').value.trim()||'Untitled role',func:$('#f_func').value,level:$('#f_level').value.trim()||'Mid',
+    count:Math.max(1,parseInt($('#f_count').value)||1),status:$('#f_status').value,hm:$('#f_hm').value.trim()||'—',target:$('#f_target').value};
+  const destC=countryById($('#f_country').value);
+  if(rid){ let srcC,r; for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){srcC=cc;r=rr;break;} }
+    Object.assign(r,data); if(srcC!==destC){ srcC.roles=srcC.roles.filter(x=>x.id!==rid); destC.roles.push(r); } activeCountry=destC.id; }
+  else { destC.roles.push({id:nid(),...data,candidates:[]}); activeCountry=destC.id; }
+  closeModal(); toast('Role saved'); render();
+}
+function deleteRole(rid){ for(const cc of DB.countries){ const i=cc.roles.findIndex(x=>x.id===rid); if(i>-1){ cc.roles.splice(i,1); break; } }
+  openRoleId=null; closeModal(); toast('Role deleted'); render(); }
+/* ================= Candidate modal ================= */
+function editCandFind(cid){ for(const cc of DB.countries){ for(const r of cc.roles){ if(r.candidates.find(x=>x.id===cid)){ openCand(r.id,cid); return; } } } }
+function openCand(rid,cid,stage){
+  let r; for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){r=rr;break;} }
+  const editing=!!cid; const cand=editing?r.candidates.find(x=>x.id===cid):{name:'',role:'',stage:stage||'Sourced',source:'LinkedIn',notes:'',linkedin:'',invited:''};
+  const opts=(arr,val)=>arr.map(o=>`<option ${o===val?'selected':''}>${o}</option>`).join('');
+  showModal(`<div class="mh"><h3>${editing?'Edit Candidate':'Add Candidate'}</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="mb"><div><label class="fl">Name</label><input id="c_name" value="${esc(cand.name)}" placeholder="Candidate name"></div>
+      <div class="grid2"><div><label class="fl">Role tag</label><input id="c_role" value="${esc(cand.role)}" placeholder="e.g. Payroll"></div>
+        <div><label class="fl">Stage</label><select id="c_stage">${opts(STAGES.map(s=>s.key),cand.stage)}</select></div></div>
+      <div><label class="fl">Source</label><select id="c_source">${opts(['LinkedIn','Referral','Agency','Job board','Inbound','Executive search'],cand.source)}</select></div>
+      <div><label class="fl">LinkedIn URL</label><input id="c_li" value="${esc(cand.linkedin||'')}" placeholder="https://linkedin.com/in/…"></div>
+      <div class="grid2"><div><label class="fl">Invitation sent on</label><input id="c_inv" type="date" value="${cand.invited||''}"></div>
+        <div><label class="fl">&nbsp;</label><button class="btn sm" style="width:100%" onclick="document.getElementById('c_inv').value=todayISO()">✉ Mark invited today</button></div></div>
+      <div><label class="fl">Notes</label><textarea id="c_notes" placeholder="Latest status, next step...">${esc(cand.notes)}</textarea></div></div>
+    <div class="mf">${editing?`<button class="btn del" onclick="deleteCand('${rid}','${cid}')">Delete</button>`:'<span></span>'}
+      <div style="display:flex;gap:8px"><button class="btn ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn primary" onclick="saveCand('${rid}',${editing?`'${cid}'`:'null'})">Save</button></div></div>`);
+}
+function saveCand(rid,cid){
+  let r; for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){r=rr;break;} }
+  const data={name:$('#c_name').value.trim()||'Unnamed',role:$('#c_role').value.trim(),stage:$('#c_stage').value,
+    source:$('#c_source').value,linkedin:$('#c_li').value.trim(),invited:$('#c_inv').value,notes:$('#c_notes').value.trim()};
+  if(cid){ Object.assign(r.candidates.find(x=>x.id===cid),data); } else { r.candidates.push({id:nid(),...data}); }
+  openRoleId=rid; closeModal(); toast('Candidate saved'); render();
+}
+function deleteCand(rid,cid){ let r; for(const cc of DB.countries){ const rr=cc.roles.find(x=>x.id===rid); if(rr){r=rr;break;} }
+  r.candidates=r.candidates.filter(x=>x.id!==cid); closeModal(); toast('Candidate removed'); render(); }
+/* ================= Modal plumbing ================= */
+function showModal(html,wide){ const o=$('#overlay'); o.innerHTML=`<div class="modal${wide?' wide':''}">${html}</div>`; o.classList.add('show'); }
+function closeModal(){ $('#overlay').classList.remove('show'); $('#overlay').innerHTML=''; }
+$('#overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeModal(); });
+/* ================= Export / import ================= */
+function exportData(){ const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='sea-hiring-pipeline.json'; a.click(); URL.revokeObjectURL(a.href); toast('Pipeline exported'); }
+function importFile(){ $('#fileInput').click(); }
+function handleFile(e){ const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ try{ const d=JSON.parse(rd.result); if(d&&Array.isArray(d.countries)){ DB=d; bumpUid(); activeCountry=DB.countries[0]?.id; openRoleId=null; save(); render(); toast('Pipeline imported'); } else toast('Invalid file'); }catch(err){ toast('Could not read file'); } };
+  rd.readAsText(f); e.target.value=''; }
+/* ================= Render ================= */
+function render(){ save(); renderKPIs(); renderTabs(); if(openRoleId) renderBoard(); else renderCountry();
+  $('#foot').innerHTML='Auto-saves to this browser. <b>Export</b> to back up or move machines · <b>Import</b> to restore · drag candidate cards between stages. Built for Boonchoo · HONO SEA.'; }
+/* ================= Init ================= */
+(function init(){ const saved=loadSaved(); if(saved){ DB=saved; bumpUid(); } else { DB=seed(); } activeCountry=DB.countries[0].id; render(); })();
+</script>
+</body>
+</html>
