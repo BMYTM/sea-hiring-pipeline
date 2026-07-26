@@ -158,19 +158,34 @@ const STAGES=[{key:'Sourced',color:'var(--sourced)'},{key:'Screening',color:'var
   {key:'Interview',color:'var(--interview)'},{key:'Offer',color:'var(--offer)'},{key:'Hired',color:'var(--hired)'}];
 const FUNCTIONS=['Sales','Presales','Implementation','Customer Success','Support','Operations','People / TA','Leadership','Marketing'];
 const STATUSES=['Open','Urgent','On-hold'];
-const LS_KEY='hono_sea_pipeline_v3';
+const LS_KEY='hono_sea_pipeline_v4';
 let uid=1000; const nid=()=>'x'+(++uid);
 
 /* ================= Seed data ================= */
 function seed(){ uid=1000; return { version:3, countries:[
   { id:'th', name:'Thailand', flag:'🇹🇭', head:'Boonchoo Malhotra', ledBy:'direct', roles:[
     { id:nid(), title:'Payroll Functional Consultant', func:'Implementation', level:'Mid-Senior', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-15', jd:JD.payroll, candidates:[
-      {id:nid(),name:'Jessada Saeng-amorn',role:'Payroll',stage:'Screening',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/jessada-saeng-amorn/',notes:'HRIS & Payroll Consultant @ Humanica. ✅ ACCEPTED 25 Jul. Email: strfrong98@gmail.com. Send follow-up + book screen. Top fit.'},
-      {id:nid(),name:'Kittiyote Saisakol',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/kittiyote-saisakol-b69b7a2b0/',notes:'HR Payroll & Consultant.'},
-      {id:nid(),name:'Wannasikarn Puengnam',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/wannasikarn/',notes:'Payroll Consultant.'},
-      {id:nid(),name:'Chayanis Inruedee',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Senior Payroll Consultant. Find via payroll search.'},
-      {id:nid(),name:'Lapat Prasrihaklang',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Senior Payroll Consultant.'},
-      {id:nid(),name:'Marisa Boonjan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'',notes:'Payroll Consultant.'}]},
+      {id:nid(),name:'Wannasikarn Puengnam',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/wannasikarn/',notes:'Payroll Consultant (ex-Humanica). Invite sent.'},
+      {id:nid(),name:'Chayanis Inruedee',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/chayanis-inruedee-5ba1741b3/',notes:'Senior Payroll Consultant @ Grant Thornton. Invite sent.'},
+      {id:nid(),name:'Siripraiya Tana',role:'Payroll',stage:'Screening',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/siripraiya/',notes:'HR Ops | Payroll Support (ex-Humanica consultant). ACCEPTED — now 1st-degree. Book screen.'},
+      {id:nid(),name:'Parichat Chompikul',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/parichat-chompikul/',notes:'Associate Consultant, HRIS & Payroll @ Humanica. Invite sent.'},
+      {id:nid(),name:'Siriyaporn Kaensom',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/siriyaporn-kaensom-399766281/',notes:'Consultant, HRIS Implementation & Payroll Systems @ Humanica. Invite sent.'},
+      {id:nid(),name:'Pimwaree Pongpisitsan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/pimwaree-pongpisitsan-7b3664343/',notes:'Payroll & HR Ops | HRIS (Humatrix/Workplaze) Implementer @ Humanica. Invite sent.'},
+      {id:nid(),name:'Bordee Saknaweporn',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/bordee-saknaweporn-38274a159/',notes:'Senior Payroll Ops @ SPX (ex-Humanica). Invite sent.'},
+      {id:nid(),name:'Anchali Khamta',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/anchali-khamta-bb3213358/',notes:'Consultant @ Humanica. Invite sent.'},
+      {id:nid(),name:'Thitaporn Ankumphot',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/thitaporn-ankumphot-2bb587240/',notes:'Payroll Consultant @ Pinno by PRTR. Invite sent.'},
+      {id:nid(),name:'Sakchai Changchana',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/sakchai-changchana/',notes:'Associate Consultant @ Humanica. Invite sent.'},
+      {id:nid(),name:'Padol Soontrasai',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/padol/',notes:'SAP HCM & ERP Implementation Consultant. Invite sent.'},
+      {id:nid(),name:'Sureeporn S.',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/sureeporn-s-837107292/',notes:'Payroll & HR Ops Consultant | HRIS Implementation @ I/O Consulting. Invite sent.'},
+      {id:nid(),name:'Kampol Sareewattanarat',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/kampol-sareewattanarat-8873b153/',notes:'SAP HCM Senior Consultant / SAP Payroll @ ExxonMobil. Invite sent.'},
+      {id:nid(),name:'Benjaporn Prajongkij',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/benjaporn-prajongkij/',notes:'Senior Consultant, Payroll & Tax @ EY. Invite sent.'},
+      {id:nid(),name:'Sitthat Chaivisit',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/sitthat-chaivisit-bb470b171/',notes:'SAP SuccessFactors Consultant @ EPI-USE. Invite sent.'},
+      {id:nid(),name:'Sittipong Apichartstaporn',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/sittipong-apichartstaporn-1126b4b9/',notes:'Senior SAP SuccessFactors Payroll Consultant @ EPI-USE. Invite sent.'},
+      {id:nid(),name:'Korrawut (Sam) Ourawattanaphan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/korrawut-sam-ourawattanaphan-2322493a/',notes:'Solution Consultant @ Workday (ex-SAP HR). Invite sent.'},
+      {id:nid(),name:'Kittaya Sahakhun',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/kittaya-sahakhun-44493715/',notes:'HR Technology Transformation @ EPI-USE. Invite sent.'},
+      {id:nid(),name:'Hassanali Shahzad',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/hassanali-shahzad/',notes:'HCM & HRIS Consultant | Oracle Cloud & Darwinbox @ Rams Solutions. Invite sent.'},
+      {id:nid(),name:'Nutnicha Jamkrajang',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/nutnicha-jamkrajang-702b5927a/',notes:'HRMS Implementer | Payroll processing. Invite sent.'},
+      {id:nid(),name:'Natcha Chantaraniyom',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/natcha-chantaraniyom-2212b729b/',notes:'Consultant | Payroll Operation | Implementer | HRIS Humanica. NOT invited — LinkedIn email gate; connect manually.'}]},
     { id:nid(), title:'L1 Support Specialist', func:'Support', level:'Junior-Mid', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-20', jd:JD.l1, candidates:[
       {id:nid(),name:'Natee Thungpipat',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/natee-thungpipat/',notes:'App Support Engineer | SQL | Linux | API. Top fit.'},
       {id:nid(),name:'Rittidej Sriadulpan',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/rittidej-sriadulpan-864473202/',notes:'Application Support Engineer.'},
