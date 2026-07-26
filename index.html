@@ -158,7 +158,7 @@ const STAGES=[{key:'Sourced',color:'var(--sourced)'},{key:'Screening',color:'var
   {key:'Interview',color:'var(--interview)'},{key:'Offer',color:'var(--offer)'},{key:'Hired',color:'var(--hired)'}];
 const FUNCTIONS=['Sales','Presales','Implementation','Customer Success','Support','Operations','People / TA','Leadership','Marketing'];
 const STATUSES=['Open','Urgent','On-hold'];
-const LS_KEY='hono_sea_pipeline_v4';
+const LS_KEY='hono_sea_pipeline_v5';
 let uid=1000; const nid=()=>'x'+(++uid);
 
 /* ================= Seed data ================= */
@@ -183,8 +183,14 @@ function seed(){ uid=1000; return { version:3, countries:[
       {id:nid(),name:'Sittipong Apichartstaporn',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/sittipong-apichartstaporn-1126b4b9/',notes:'Senior SAP SuccessFactors Payroll Consultant @ EPI-USE. Invite sent.'},
       {id:nid(),name:'Korrawut (Sam) Ourawattanaphan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/korrawut-sam-ourawattanaphan-2322493a/',notes:'Solution Consultant @ Workday (ex-SAP HR). Invite sent.'},
       {id:nid(),name:'Kittaya Sahakhun',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/kittaya-sahakhun-44493715/',notes:'HR Technology Transformation @ EPI-USE. Invite sent.'},
-      {id:nid(),name:'Hassanali Shahzad',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/hassanali-shahzad/',notes:'HCM & HRIS Consultant | Oracle Cloud & Darwinbox @ Rams Solutions. Invite sent.'},
       {id:nid(),name:'Nutnicha Jamkrajang',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/nutnicha-jamkrajang-702b5927a/',notes:'HRMS Implementer | Payroll processing. Invite sent.'},
+      {id:nid(),name:'Apasarakorn Chandransu',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/apasarakorn-chandransu-00bb14334/',notes:'HRIS Consultant @ Humanica | HR System Implementation & Payroll Solutions. Invite sent.'},
+      {id:nid(),name:'Lapatlada Lertpanyaroj',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/lapatlada-lertpanyaroj/',notes:'Payroll outsource, HRIS & Implementer (ex-Humanica). Invite sent.'},
+      {id:nid(),name:'Ananya Sawasdee',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/ananya-sawasdee-36832a256/',notes:'Associate Consultant @ Humanica | Payroll. Invite sent.'},
+      {id:nid(),name:'Naphat Yongsiriwan',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/naphat-yongsiriwan/',notes:'HR & People Dev | ex-Humanica Payroll Associate. Invite sent.'},
+      {id:nid(),name:'Yadaporn Phetphiphat',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/yadaporn-phetphiphat-b2425b291/',notes:'HRIS Consultant | HCM Implementation | HR Transformation. Invite sent.'},
+      {id:nid(),name:'Darunpop Kosol-arpha',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/darunpop-kosol-arpha-1a9b30271/',notes:'Payroll Outsourcing & HRIS | hands-on payroll implementation (open to work). Invite sent.'},
+      {id:nid(),name:'Naphatra Srisomwong',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'2026-07-26',linkedin:'https://www.linkedin.com/in/naphatra-srisomwong-948356236/',notes:'Associate Consultant @ Humanica. Invite sent.'},
       {id:nid(),name:'Natcha Chantaraniyom',role:'Payroll',stage:'Sourced',source:'LinkedIn',invited:'',linkedin:'https://www.linkedin.com/in/natcha-chantaraniyom-2212b729b/',notes:'Consultant | Payroll Operation | Implementer | HRIS Humanica. NOT invited — LinkedIn email gate; connect manually.'}]},
     { id:nid(), title:'L1 Support Specialist', func:'Support', level:'Junior-Mid', count:1, status:'Open', hm:'Boonchoo Malhotra', target:'2026-09-20', jd:JD.l1, candidates:[
       {id:nid(),name:'Natee Thungpipat',role:'L1 Support',stage:'Sourced',source:'LinkedIn',invited:'2026-07-25',linkedin:'https://www.linkedin.com/in/natee-thungpipat/',notes:'App Support Engineer | SQL | Linux | API. Top fit.'},
